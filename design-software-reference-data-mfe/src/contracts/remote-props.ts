@@ -1,6 +1,9 @@
 export interface ReferenceDataMfeProps {
   basePath?: string;
   permissions?: readonly string[];
+  httpClient?: {
+    request<T>(path: string, init?: RequestInit): Promise<T>;
+  };
 }
 
 export const REF_HIERARCHY_MANAGE = 'REF_HIERARCHY_MANAGE';

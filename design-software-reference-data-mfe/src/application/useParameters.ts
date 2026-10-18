@@ -2,10 +2,11 @@ import { useCallback, useEffect, useMemo, useState } from 'react';
 import { parametersService } from '../adapter/out/http/parametersService.js';
 import type { ParameterCreateDto, ParameterDto, ParameterUpdateDto, PaginationDto } from '../domain/catalog.js';
 import { MissingReferenceDataConfigurationError } from '../adapter/out/http/referenceDataHttp.js';
+import type { ReferenceDataApi } from '../adapter/out/http/referenceDataHttp.js';
 
 interface State { key: string; items: ParameterDto[]; pagination?: PaginationDto; loading: boolean; error?: Error; }
 
-export function useParameters(baseUrl?: string, search = '', enabled = true) {
+export function useParameters(baseUrl?: ReferenceDataApi, search = '', enabled = true) {
   const [page, setPage] = useState(1);
   const [pageSize, setPageSize] = useState(10);
   const [revision, setRevision] = useState(0);

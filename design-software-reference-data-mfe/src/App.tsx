@@ -6,6 +6,7 @@ import { useMacroregions } from './application/useMacroregions.js';
 import { useMicroregions } from './application/useMicroregions.js';
 import { useMunicipalities } from './application/useMunicipalities.js';
 import type { ReferenceDataMfeProps } from './contracts/remote-props.js';
+import type { ReferenceDataApi } from './adapter/out/http/referenceDataHttp.js';
 import type { GeographyLevel, GeographyOptions, GeographyRecordView } from './adapter/in/components/GeographyHierarchy.js';
 import { GeographyHierarchy } from './adapter/in/components/GeographyHierarchy.js';
 import type { GeographyFormValues } from './adapter/in/components/GeographyHierarchy.js';
@@ -93,9 +94,10 @@ function ParameterizationBackLink() {
   );
 }
 
-const App: FC<ReferenceDataMfeProps> = ({ permissions = [] }) => {
+const App: FC<ReferenceDataMfeProps> = ({ permissions = [], httpClient }) => {
   const canManageHierarchy = permissions.includes(REF_HIERARCHY_MANAGE);
-  const apiBaseUrl = import.meta.env.VITE_REFERENCE_DATA_API_BASE_URL?.trim();
+  const configuredApiBaseUrl = import.meta.env.VITE_REFERENCE_DATA_API_BASE_URL?.trim();
+  const apiBaseUrl: ReferenceDataApi | undefined = httpClient ?? configuredApiBaseUrl;
   const demoMode = import.meta.env.DEV && !apiBaseUrl;
   const [activeSection, setActiveSection] = useState<'geography' | 'institutional' | 'parameterization'>('geography');
   const canViewCatalogs = permissions.includes(REF_CATALOG_VIEW);

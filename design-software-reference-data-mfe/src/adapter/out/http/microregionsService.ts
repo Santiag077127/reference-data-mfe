@@ -6,9 +6,10 @@ import type {
   MicroregionUpdateDto,
 } from '../../../domain/geography.js';
 import { jsonBody, requestReferenceData } from './referenceDataHttp.js';
+import type { ReferenceDataApi } from './referenceDataHttp.js';
 
 export const microregionsService = {
-  list(baseUrl: string, query: MicroregionListQuery, signal?: AbortSignal) {
+  list(baseUrl: ReferenceDataApi, query: MicroregionListQuery, signal?: AbortSignal) {
     const params = new URLSearchParams({
       macroregion_id: query.macroregionId,
       page: String(query.page),
@@ -20,16 +21,16 @@ export const microregionsService = {
       { signal },
     );
   },
-  get(baseUrl: string, id: string, signal?: AbortSignal) {
+  get(baseUrl: ReferenceDataApi, id: string, signal?: AbortSignal) {
     return requestReferenceData<MicroregionDto>(baseUrl, `microregions/${encodeURIComponent(id)}`, { signal });
   },
-  create(baseUrl: string, body: MicroregionCreateDto) {
+  create(baseUrl: ReferenceDataApi, body: MicroregionCreateDto) {
     return requestReferenceData<MicroregionDto>(baseUrl, 'microregions', { method: 'POST', body: jsonBody(body) });
   },
-  update(baseUrl: string, id: string, body: MicroregionUpdateDto) {
+  update(baseUrl: ReferenceDataApi, id: string, body: MicroregionUpdateDto) {
     return requestReferenceData<MicroregionDto>(baseUrl, `microregions/${encodeURIComponent(id)}`, { method: 'PUT', body: jsonBody(body) });
   },
-  deactivate(baseUrl: string, id: string) {
+  deactivate(baseUrl: ReferenceDataApi, id: string) {
     return requestReferenceData<void>(baseUrl, `microregions/${encodeURIComponent(id)}`, { method: 'DELETE' });
   },
 };

@@ -120,4 +120,17 @@ describe('servicios HTTP de jerarquía (unitarios con fetch simulado)', () => {
     });
     expect(fetchMock.mock.calls[0]?.[1]?.headers).not.toHaveProperty('Authorization');
   });
+
+  it('delega en el cliente autenticado recibido por el shell', async () => {
+    const client = {
+      request: vi.fn(async <T>() => ({
+        data: [],
+        pagination: { page: 1, page_size: 10, total_items: 0, total_pages: 0 },
+      }) as T),
+    };
+
+    await macroregionsService.list(client, { page: 1, pageSize: 10 });
+
+    expect(client.request).toHaveBeenCalledWith('/macroregions?page=1&page_size=10', { signal: undefined });
+  });
 });

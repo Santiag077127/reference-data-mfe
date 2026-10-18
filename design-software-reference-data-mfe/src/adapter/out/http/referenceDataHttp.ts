@@ -23,6 +23,12 @@ export class MissingReferenceDataConfigurationError extends Error {
   }
 }
 
+export interface ReferenceDataHttpClient {
+  request<T>(path: string, init?: RequestInit): Promise<T>;
+}
+
+export type ReferenceDataApi = string | ReferenceDataHttpClient;
+
 const baseUrlWithSlash = (baseUrl: string): string =>
   baseUrl.endsWith('/') ? baseUrl : `${baseUrl}/`;
 
@@ -33,10 +39,14 @@ export const buildReferenceDataUrl = (baseUrl: string, path: string): URL => {
 };
 
 export async function requestReferenceData<T>(
-  baseUrl: string,
+  baseUrl: ReferenceDataApi,
   path: string,
   init: RequestInit = {},
 ): Promise<T> {
+  if (typeof baseUrl !== 'string') {
+    return baseUrl.request<T>(`/${path.replace(/^\//, '')}`, init);
+  }
+
   const url = buildReferenceDataUrl(baseUrl, path);
   let response: Response;
   try {

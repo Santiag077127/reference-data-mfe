@@ -3,6 +3,7 @@ import { useCallback, useEffect, useMemo, useState } from 'react';
 import { macroregionsService } from '../adapter/out/http/macroregionsService.js';
 import type { GeographyPaginationDto, MacroregionCreateDto, MacroregionDto, MacroregionUpdateDto } from '../domain/geography.js';
 import { MissingReferenceDataConfigurationError } from '../adapter/out/http/referenceDataHttp.js';
+import type { ReferenceDataApi } from '../adapter/out/http/referenceDataHttp.js';
 
 interface State {
   key: string;
@@ -12,7 +13,7 @@ interface State {
   error?: Error;
 }
 
-export function useMacroregions(baseUrl?: string) {
+export function useMacroregions(baseUrl?: ReferenceDataApi) {
   const [page, setPage] = useState(1);
   const [pageSize, setPageSize] = useState(10);
   const [revision, setRevision] = useState(0);

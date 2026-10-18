@@ -3,6 +3,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { municipalitiesService } from '../adapter/out/http/municipalitiesService.js';
 import type { GeographyPaginationDto, MunicipalityCreateDto, MunicipalityDto, MunicipalityUpdateDto } from '../domain/geography.js';
 import { MissingReferenceDataConfigurationError } from '../adapter/out/http/referenceDataHttp.js';
+import type { ReferenceDataApi } from '../adapter/out/http/referenceDataHttp.js';
 
 interface State {
   key: string;
@@ -29,7 +30,7 @@ const demoMunicipalities: MunicipalityDto[] = [
   },
 ];
 
-export function useMunicipalities(baseUrl?: string, departmentId?: string, includeAll = false) {
+export function useMunicipalities(baseUrl?: ReferenceDataApi, departmentId?: string, includeAll = false) {
   const [page, setPage] = useState(1);
   const [pageSize, setPageSize] = useState(includeAll ? 50 : 10);
   const [revision, setRevision] = useState(0);

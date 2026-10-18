@@ -6,9 +6,10 @@ import type {
   MunicipalityUpdateDto,
 } from '../../../domain/geography.js';
 import { jsonBody, requestReferenceData } from './referenceDataHttp.js';
+import type { ReferenceDataApi } from './referenceDataHttp.js';
 
 export const municipalitiesService = {
-  list(baseUrl: string, query: MunicipalityListQuery, signal?: AbortSignal) {
+  list(baseUrl: ReferenceDataApi, query: MunicipalityListQuery, signal?: AbortSignal) {
     const params = new URLSearchParams({
       page: String(query.page),
       page_size: String(query.pageSize),
@@ -20,16 +21,16 @@ export const municipalitiesService = {
       { signal },
     );
   },
-  get(baseUrl: string, id: string, signal?: AbortSignal) {
+  get(baseUrl: ReferenceDataApi, id: string, signal?: AbortSignal) {
     return requestReferenceData<MunicipalityDto>(baseUrl, `municipalities/${encodeURIComponent(id)}`, { signal });
   },
-  create(baseUrl: string, body: MunicipalityCreateDto) {
+  create(baseUrl: ReferenceDataApi, body: MunicipalityCreateDto) {
     return requestReferenceData<MunicipalityDto>(baseUrl, 'municipalities', { method: 'POST', body: jsonBody(body) });
   },
-  update(baseUrl: string, id: string, body: MunicipalityUpdateDto) {
+  update(baseUrl: ReferenceDataApi, id: string, body: MunicipalityUpdateDto) {
     return requestReferenceData<MunicipalityDto>(baseUrl, `municipalities/${encodeURIComponent(id)}`, { method: 'PUT', body: jsonBody(body) });
   },
-  deactivate(baseUrl: string, id: string) {
+  deactivate(baseUrl: ReferenceDataApi, id: string) {
     return requestReferenceData<void>(baseUrl, `municipalities/${encodeURIComponent(id)}`, { method: 'DELETE' });
   },
 };
