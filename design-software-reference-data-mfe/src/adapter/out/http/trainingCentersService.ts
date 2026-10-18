@@ -6,6 +6,7 @@ import type {
   InstitutionalStructureListQuery,
 } from '../../../domain/institutionalStructure.js';
 import { jsonBody, requestReferenceData } from './referenceDataHttp.js';
+import type { ReferenceDataApi } from './referenceDataHttp.js';
 
 const listQuery = (query: InstitutionalStructureListQuery) => {
   const params = new URLSearchParams({
@@ -17,27 +18,27 @@ const listQuery = (query: InstitutionalStructureListQuery) => {
 };
 
 export const trainingCentersService = {
-  list(baseUrl: string, query: InstitutionalStructureListQuery, signal?: AbortSignal) {
+  list(baseUrl: ReferenceDataApi, query: InstitutionalStructureListQuery, signal?: AbortSignal) {
     return requestReferenceData<TrainingCenterPageDto>(
       baseUrl,
       `training-centers?${listQuery(query).toString()}`,
       { signal },
     );
   },
-  create(baseUrl: string, body: TrainingCenterCreateDto) {
+  create(baseUrl: ReferenceDataApi, body: TrainingCenterCreateDto) {
     return requestReferenceData<TrainingCenterDto>(baseUrl, 'training-centers', {
       method: 'POST',
       body: jsonBody(body),
     });
   },
-  update(baseUrl: string, id: string, body: TrainingCenterUpdateDto) {
+  update(baseUrl: ReferenceDataApi, id: string, body: TrainingCenterUpdateDto) {
     return requestReferenceData<TrainingCenterDto>(
       baseUrl,
       `training-centers/${encodeURIComponent(id)}`,
       { method: 'PUT', body: jsonBody(body) },
     );
   },
-  deactivate(baseUrl: string, id: string) {
+  deactivate(baseUrl: ReferenceDataApi, id: string) {
     return requestReferenceData<void>(
       baseUrl,
       `training-centers/${encodeURIComponent(id)}`,

@@ -2,6 +2,7 @@ import { useCallback, useEffect, useMemo, useState } from 'react';
 
 import { institutionalUnitsService } from '../adapter/out/http/institutionalUnitsService.js';
 import { MissingReferenceDataConfigurationError } from '../adapter/out/http/referenceDataHttp.js';
+import type { ReferenceDataApi } from '../adapter/out/http/referenceDataHttp.js';
 import type {
   InstitutionalStructurePaginationDto,
   InstitutionalUnitCreateDto,
@@ -41,7 +42,7 @@ const buildPagination = (totalItems: number, pageSize: number): InstitutionalStr
   total_pages: totalItems ? 1 : 0,
 });
 
-export function useInstitutionalUnits(baseUrl?: string, isActive?: boolean, initialPageSize = 10) {
+export function useInstitutionalUnits(baseUrl?: ReferenceDataApi, isActive?: boolean, initialPageSize = 10) {
   const [page, setPage] = useState(1);
   const [pageSize, setPageSize] = useState(initialPageSize);
   const [revision, setRevision] = useState(0);

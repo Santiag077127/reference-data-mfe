@@ -17,10 +17,11 @@ import type {
 } from "../../../domain/catalog.js";
 import { VALUE_TYPES } from "../../../domain/catalog.js";
 import { ReferenceDataHttpError } from "../../out/http/referenceDataHttp.js";
+import type { ReferenceDataApi } from '../../out/http/referenceDataHttp.js';
 import styles from "./Parameterization.module.css";
 
 export interface ParameterizationProps {
-  baseUrl?: string;
+  baseUrl?: ReferenceDataApi;
   demoMode?: boolean;
   canViewCatalogs: boolean;
   canManageCatalogs: boolean;

@@ -3,6 +3,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { departmentsService } from '../adapter/out/http/departmentsService.js';
 import type { DepartmentCreateDto, DepartmentDto, DepartmentUpdateDto, GeographyPaginationDto } from '../domain/geography.js';
 import { MissingReferenceDataConfigurationError } from '../adapter/out/http/referenceDataHttp.js';
+import type { ReferenceDataApi } from '../adapter/out/http/referenceDataHttp.js';
 
 interface State {
   key: string;
@@ -12,7 +13,7 @@ interface State {
   error?: Error;
 }
 
-export function useDepartments(baseUrl?: string, microregionId?: string) {
+export function useDepartments(baseUrl?: ReferenceDataApi, microregionId?: string) {
   const [page, setPage] = useState(1);
   const [pageSize, setPageSize] = useState(10);
   const [revision, setRevision] = useState(0);

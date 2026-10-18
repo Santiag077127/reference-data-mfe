@@ -4,6 +4,7 @@ import { useInstitutionalUnits } from '../../../application/useInstitutionalUnit
 import { useMunicipalities } from '../../../application/useMunicipalities.js';
 import { useTrainingCenters } from '../../../application/useTrainingCenters.js';
 import { ReferenceDataHttpError } from '../../out/http/referenceDataHttp.js';
+import type { ReferenceDataApi } from '../../out/http/referenceDataHttp.js';
 import type {
   InstitutionalUnitCreateDto,
   InstitutionalUnitDto,
@@ -74,7 +75,7 @@ function PageControls({
   );
 }
 
-function CenterPanel({ baseUrl }: { baseUrl?: string }) {
+function CenterPanel({ baseUrl }: { baseUrl?: ReferenceDataApi }) {
   const [filter, setFilter] = useState<StatusFilter>('all');
   const centers = useTrainingCenters(baseUrl, toIsActive(filter));
   const municipalities = useMunicipalities(baseUrl, undefined, true);
@@ -312,7 +313,7 @@ function CenterPanel({ baseUrl }: { baseUrl?: string }) {
   );
 }
 
-function UnitsPanel({ baseUrl }: { baseUrl?: string }) {
+function UnitsPanel({ baseUrl }: { baseUrl?: ReferenceDataApi }) {
   const [filter, setFilter] = useState<StatusFilter>('all');
   const units = useInstitutionalUnits(baseUrl, toIsActive(filter));
   const centers = useTrainingCenters(baseUrl, undefined, 50);
@@ -464,7 +465,7 @@ function UnitsPanel({ baseUrl }: { baseUrl?: string }) {
   );
 }
 
-export function InstitutionalStructure({ baseUrl }: { baseUrl?: string }) {
+export function InstitutionalStructure({ baseUrl }: { baseUrl?: ReferenceDataApi }) {
   const [panel, setPanel] = useState<Panel>('centers');
   return (
     <section className={styles.root} aria-label="Gestión de centros y sedes">

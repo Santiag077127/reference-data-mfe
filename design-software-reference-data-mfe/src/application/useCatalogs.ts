@@ -2,10 +2,11 @@ import { useCallback, useEffect, useMemo, useState } from 'react';
 import { catalogsService, type CatalogListQuery } from '../adapter/out/http/catalogsService.js';
 import type { CatalogCreateDto, CatalogDto, CatalogUpdateDto, PaginationDto } from '../domain/catalog.js';
 import { MissingReferenceDataConfigurationError } from '../adapter/out/http/referenceDataHttp.js';
+import type { ReferenceDataApi } from '../adapter/out/http/referenceDataHttp.js';
 
 interface State { key: string; items: CatalogDto[]; pagination?: PaginationDto; loading: boolean; error?: Error; }
 
-export function useCatalogs(baseUrl?: string, search = '') {
+export function useCatalogs(baseUrl?: ReferenceDataApi, search = '') {
   const [page, setPage] = useState(1);
   const [pageSize, setPageSize] = useState(10);
   const [revision, setRevision] = useState(0);

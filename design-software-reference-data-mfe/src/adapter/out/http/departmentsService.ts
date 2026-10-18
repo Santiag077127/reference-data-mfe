@@ -6,9 +6,10 @@ import type {
   GeographyPageDto,
 } from '../../../domain/geography.js';
 import { jsonBody, requestReferenceData } from './referenceDataHttp.js';
+import type { ReferenceDataApi } from './referenceDataHttp.js';
 
 export const departmentsService = {
-  list(baseUrl: string, query: DepartmentListQuery, signal?: AbortSignal) {
+  list(baseUrl: ReferenceDataApi, query: DepartmentListQuery, signal?: AbortSignal) {
     const params = new URLSearchParams({
       microregion_id: query.microregionId,
       page: String(query.page),
@@ -20,16 +21,16 @@ export const departmentsService = {
       { signal },
     );
   },
-  get(baseUrl: string, id: string, signal?: AbortSignal) {
+  get(baseUrl: ReferenceDataApi, id: string, signal?: AbortSignal) {
     return requestReferenceData<DepartmentDto>(baseUrl, `departments/${encodeURIComponent(id)}`, { signal });
   },
-  create(baseUrl: string, body: DepartmentCreateDto) {
+  create(baseUrl: ReferenceDataApi, body: DepartmentCreateDto) {
     return requestReferenceData<DepartmentDto>(baseUrl, 'departments', { method: 'POST', body: jsonBody(body) });
   },
-  update(baseUrl: string, id: string, body: DepartmentUpdateDto) {
+  update(baseUrl: ReferenceDataApi, id: string, body: DepartmentUpdateDto) {
     return requestReferenceData<DepartmentDto>(baseUrl, `departments/${encodeURIComponent(id)}`, { method: 'PUT', body: jsonBody(body) });
   },
-  deactivate(baseUrl: string, id: string) {
+  deactivate(baseUrl: ReferenceDataApi, id: string) {
     return requestReferenceData<void>(baseUrl, `departments/${encodeURIComponent(id)}`, { method: 'DELETE' });
   },
 };
